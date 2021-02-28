@@ -24,9 +24,10 @@ int main()
     //}
 
 
-    File::FileManager x(File::FileInputType::Directory, "D:\\Users\\Syro\\Documents\\Cuarto Semestre\\Teoria de aurtomatas\\IvanOswaldoAyalaMartinez_DavidAlonsoTrejoNatividad");
-    x.BuildDirectoryFilesMap();
+    File::FileManager<File::InputFile> x("D:\\Users\\Syro\\Documents\\Cuarto Semestre\\Teoria de aurtomatas\\IvanOswaldoAyalaMartinez_DavidAlonsoTrejoNatividad");
     auto res = x.GetDirectoryFilesMap();
+
+    auto resSize = res.size();
 
     return 0;
 }

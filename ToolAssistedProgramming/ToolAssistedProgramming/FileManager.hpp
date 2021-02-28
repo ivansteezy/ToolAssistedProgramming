@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <utility>
+#include <cassert>
 #include <string>
 #include <map>
 
@@ -12,25 +13,29 @@ namespace fs = std::filesystem;
 
 namespace File
 {
+	struct InputFile {};
+	struct InputDirectory {};
 	enum class FileInputType
 	{
 		File      = 0x0,
 		Directory = 0x1
 	};
 
+	template<typename T>
 	class FileManager
 	{
 	public:
 		FileManager() = default;
-		FileManager(FileInputType type, fs::path itemPath);
+		FileManager(fs::path itemPath);
 
 	public:
-		void BuildDirectoryFilesMap();
 		std::map<std::string, std::vector<std::string>> GetDirectoryFilesMap() const;
+		std::vector<std::string> GetFileLines() const;
 
 	private:
-		void OpenFile();
-		void OpenDirectory();
+		void BuildFileLines();
+		void BuildDirectoryFilesMap();
+
 		std::vector<fs::path> FetchFilesInDirectory() const;
 
 	private:

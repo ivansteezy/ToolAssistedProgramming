@@ -2,21 +2,42 @@
 
 namespace File
 {
-	FileManager::FileManager(FileInputType type, fs::path itemPath)
+	/*template class FileManager<InputFile>;
+	template class FileManager<InputDirectory>;*/
+
+	template<typename T>
+	FileManager<T>::FileManager(fs::path itemPath)
 		: m_itemPath(itemPath)
 	{
-		if (type == FileInputType::File)
+		if constexpr(std::is_same<T, InputFile>::value)
 		{
-			OpenFile();
+			BuildFileLines();
 		}
-		else
+		if constexpr(std::is_same<T, InputDirectory>::value)
 		{
-			FetchFilesInDirectory();
+			BuildDirectoryFilesMap();
 		}
 	}
 
-	void FileManager::BuildDirectoryFilesMap()
+	template<typename T>
+	void FileManager<T>::BuildFileLines()
 	{
+		static_assert(std::is_same<T, InputFile>::value, "The type is not a file");
+		std::ifstream file;
+		std::string fileLine;
+
+		file.open(m_itemPath.string());
+		while (std::getline(file, fileLine))
+		{
+			m_fileRawLines.push_back(fileLine);
+		}
+		file.close();
+	}
+
+	template<typename T>
+	void FileManager<T>::BuildDirectoryFilesMap()
+	{
+		static_assert(std::is_same<T, InputDirectory>::value, "The type is not a directory");
 		auto entries = FetchFilesInDirectory();
 		std::vector<std::string> currentFileLines;
 		std::ifstream currentFile;
@@ -38,17 +59,8 @@ namespace File
 		}
 	}
 
-	void FileManager::OpenFile()
-	{
-
-	}
-
-	void FileManager::OpenDirectory()
-	{
-
-	}
-
-	std::vector<fs::path> FileManager::FetchFilesInDirectory() const
+	template<typename T>
+	std::vector<fs::path> FileManager<T>::FetchFilesInDirectory() const
 	{
 		std::vector<fs::path> entries;
 		for (const auto& entry : fs::directory_iterator(m_itemPath))
@@ -58,9 +70,17 @@ namespace File
 		return entries;
 	}
 
+	template<typename T>
 	[[nodiscard]]
-	std::map<std::string, std::vector<std::string>> FileManager::GetDirectoryFilesMap() const
+	std::map<std::string, std::vector<std::string>> FileManager<T>::GetDirectoryFilesMap() const
 	{
 		return m_directoryRawFilesMap;
+	}
+
+	template<typename T>
+	[[nodiscard]]
+	std::vector<std::string> FileManager<T>::GetFileLines() const
+	{
+		return m_fileRawLines;
 	}
 }
