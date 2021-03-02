@@ -13,20 +13,17 @@ namespace fs = std::filesystem;
 
 namespace File
 {
-	struct InputFile {};
-	struct InputDirectory {};
 	enum class FileInputType
 	{
 		File      = 0x0,
 		Directory = 0x1
 	};
 
-	template<typename T>
 	class FileManager
 	{
 	public:
 		FileManager() = default;
-		FileManager(fs::path itemPath);
+		FileManager(FileInputType type, fs::path itemPath);
 
 	public:
 		std::map<std::string, std::vector<std::string>> GetDirectoryFilesMap() const;
@@ -40,9 +37,10 @@ namespace File
 
 	private:
 		fs::path m_itemPath;
+		FileInputType m_type;
 		fs::directory_iterator entryFiles;
-		std::map<std::string, std::vector<std::string>> m_directoryRawFilesMap;
 		std::vector<std::string> m_fileRawLines;
+		std::map<std::string, std::vector<std::string>> m_directoryRawFilesMap;
 	};
 }
 
