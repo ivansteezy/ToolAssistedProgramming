@@ -18,7 +18,6 @@ namespace File
 
 	void FileManager::BuildFileLines()
 	{
-		//static_assert(std::is_same<T, InputFile>::value, "The type is not a file");
 		std::ifstream file;
 		std::string fileLine;
 
@@ -32,7 +31,6 @@ namespace File
 
 	void FileManager::BuildDirectoryFilesMap()
 	{
-		//static_assert(std::is_same<T, InputDirectory>::value, "The type is not a directory");
 		auto entries = FetchFilesInDirectory();
 		std::vector<std::string> currentFileLines;
 		std::ifstream currentFile;
