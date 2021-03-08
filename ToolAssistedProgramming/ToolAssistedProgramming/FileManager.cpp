@@ -1,6 +1,6 @@
 #include "FileManager.hpp"
 
-namespace File
+namespace Tap
 {
 	FileManager::FileManager(FileInputType type, fs::path itemPath)
 		: m_itemPath(itemPath),

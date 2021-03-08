@@ -24,7 +24,7 @@ int main()
     //}
 
 
-    File::FileManager x(File::FileInputType::File, "C:\\Users\\Syro\\Desktop\\ExampleListingFile.cpp");
+    Tap::FileManager x(Tap::FileInputType::File, "C:\\Users\\Syro\\Desktop\\ExampleListingFile.cpp");
     auto res = x.GetFileLines();
 
     auto resSize = res.size();

@@ -9,9 +9,11 @@
 #include <string>
 #include <map>
 
+#include "Foundation.hpp"
+
 namespace fs = std::filesystem;
 
-namespace File
+namespace Tap
 {
 	enum class FileInputType
 	{
@@ -26,7 +28,7 @@ namespace File
 		FileManager(FileInputType type, fs::path itemPath);
 
 	public:
-		std::map<std::string, std::vector<std::string>> GetDirectoryFilesMap() const;
+		FileDataMap GetDirectoryFilesMap() const;
 		std::vector<std::string> GetFileLines() const;
 
 	private:
@@ -40,7 +42,7 @@ namespace File
 		FileInputType m_type;
 		fs::directory_iterator entryFiles;
 		std::vector<std::string> m_fileRawLines;
-		std::map<std::string, std::vector<std::string>> m_directoryRawFilesMap;
+		FileDataMap m_directoryRawFilesMap;
 	};
 }
 

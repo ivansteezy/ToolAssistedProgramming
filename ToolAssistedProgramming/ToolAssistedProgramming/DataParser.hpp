@@ -1,17 +1,28 @@
 #ifndef DATAPARSER_HPP
 #define DATAPARSER_HPP
+
 #include <map>
 #include <vector>
 #include <string>
 
-namespace Parser
+#include "Foundation.hpp"
+
+namespace Tap
 {
+
 	class DataParser
 	{
 	public:
 		DataParser() = default;
-		DataParser(std::map<std::string, std::vector<std::string>>);
+		DataParser(FileDataMap fileData);
 
+	private:
+		void SortLines()
+		{
+
+		}
+
+	public:
 
 	};
 }
