@@ -24,8 +24,8 @@ int main()
     //}
 
 
-    File::FileManager x(File::FileInputType::Directory, "D:\\Users\\Syro\\Documents\\Cuarto Semestre\\Teoria de aurtomatas\\IvanOswaldoAyalaMartinez_DavidAlonsoTrejoNatividad");
-    auto res = x.GetDirectoryFilesMap();
+    File::FileManager x(File::FileInputType::File, "C:\\Users\\Syro\\Desktop\\ExampleListingFile.cpp");
+    auto res = x.GetFileLines();
 
     auto resSize = res.size();
     return 0;
