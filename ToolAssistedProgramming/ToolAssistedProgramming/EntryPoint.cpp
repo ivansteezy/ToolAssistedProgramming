@@ -1,5 +1,6 @@
 ﻿#include "EntryPoint.hpp"
 #include "FileManager.hpp"
+#include "DataParser.hpp"
 
 int main()
 {
@@ -28,5 +29,9 @@ int main()
     auto res = x.GetFileLines();
 
     auto resSize = res.size();
+
+    Tap::DataParser dp(res);
+    dp.SortLines();
+
     return 0;
 }
