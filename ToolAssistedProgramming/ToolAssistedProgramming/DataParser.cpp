@@ -25,4 +25,19 @@ namespace Tap
 
 		//sorting done
 	}
+
+	void DataParser::BuildCommandPayLoad()
+	{
+
+	}
+
+	void DataParser::ConsolidateNavigationComand()
+	{
+
+	}
+
+	void DataParser::SanitizeLine()
+	{
+
+	}
 }

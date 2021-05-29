@@ -10,18 +10,25 @@
 
 namespace Tap
 {
-	enum ArrowNavigation
+	enum KeyboardCommand : std::uint8_t
 	{
-		Up   = 0x0,
-		Down = 0x1,
-		None = 0x2
+		Up       = 0x00,	// ~^
+		Down     = 0x01,	// ~v
+		Left     = 0x02,	// ~<
+		Right    = 0x03,	// ~>
+		Home     = 0x04,	// ~hm
+		End      = 0x05,	// ~nd
+		Delete   = 0x06,	// ~dl
+		PageUp   = 0x07,	// ~pu
+		PageDown = 0x08,	// ~pd
+		None     = 0xFF		// ~nn
 	};
 
 	struct LineMetadata
 	{
 		std::size_t orderValue;
 		std::string text;
-		std::pair<ArrowNavigation, int> navigationCommads;
+		std::pair<KeyboardCommand, int> navigationCommads;
 	};
 
 	class DataParser
@@ -33,10 +40,14 @@ namespace Tap
 
 	public:
 		void SortLines();
+		void BuildCommandPayLoad();
+		void ConsolidateNavigationComand();
+		void SanitizeLine();
 
 	public:
 		FileDataLines m_fileLines;
 		std::map<int, std::string> m_mapToOrder;
+		std::vector<LineMetadata> m_commandPayload;
 	};
 }
 

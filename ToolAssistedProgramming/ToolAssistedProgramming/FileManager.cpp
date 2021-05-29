@@ -52,6 +52,7 @@ namespace Tap
 		}
 	}
 
+	[[nodiscard]]
 	std::vector<fs::path> FileManager::FetchFilesInDirectory() const
 	{
 		std::vector<fs::path> entries;
