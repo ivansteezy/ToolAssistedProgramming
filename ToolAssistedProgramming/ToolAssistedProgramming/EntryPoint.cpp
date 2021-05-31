@@ -43,7 +43,6 @@ int main()
     auto resSize = res.size();
 
     Tap::DataParser dp(res);
-    dp.SortLines();
 
     return 0;
 }

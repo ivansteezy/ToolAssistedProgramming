@@ -24,11 +24,17 @@ namespace Tap
 		None     = 0xFF		// ~nn
 	};
 
+	struct Command
+	{
+		KeyboardCommand command;
+		std::vector<std::string> arguments;
+	};
+
 	struct LineMetadata
 	{
 		std::size_t orderValue;
 		std::string text;
-		std::pair<KeyboardCommand, int> navigationCommads;
+		std::vector<Command> navigationCommads;
 	};
 
 	class DataParser
@@ -41,7 +47,8 @@ namespace Tap
 	public:
 		void SortLines();
 		void BuildCommandPayLoad();
-		void ConsolidateNavigationComand();
+		void BuildLineMetadata();
+		void RemoveTab();
 		void SanitizeLine();
 
 	public:

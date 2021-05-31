@@ -9,7 +9,7 @@ namespace Tap
 
 	DataParser::DataParser(FileDataLines filelines) : m_fileLines(filelines)
 	{
-
+		SortLines();
 	}
 
 	void DataParser::SortLines()
@@ -18,12 +18,7 @@ namespace Tap
 			return std::lexicographical_compare(std::begin(a), std::begin(a) + 2, std::begin(b), std::begin(b) + 2);
 		});
 
-		for (auto const& s : m_fileLines)
-		{
-			std::cout << s << '\n';
-		}
-
-		//sorting done
+		RemoveTab();
 	}
 
 	void DataParser::BuildCommandPayLoad()
@@ -31,9 +26,20 @@ namespace Tap
 
 	}
 
-	void DataParser::ConsolidateNavigationComand()
+	void DataParser::BuildLineMetadata()
 	{
 
+	}
+
+	void DataParser::RemoveTab()
+	{
+		constexpr std::string_view sequenceToRemove = "\t\t\t\t";
+		for (auto& line : m_fileLines)
+		{
+			auto initialPosition = line.find(sequenceToRemove);
+			if (initialPosition != std::string::npos)
+				line.erase(initialPosition, sequenceToRemove.length());
+		}
 	}
 
 	void DataParser::SanitizeLine()
