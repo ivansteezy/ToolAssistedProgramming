@@ -60,9 +60,40 @@ namespace Tap
 		// 2.-identify the number of times to execute that command
 		// 3.-stack the command
 		// 4.-identify if proceed another "~" token, repeat step 1
-		std::cout << stringCommand << std::endl;
+		std::vector<Command> cmds;
+		if (stringCommand.find("~") == std::string::npos)
+		{
+			cmds.push_back({ KeyboardCommand::None, 0 }); // list initializers lmao
+			return cmds;
+		}
 
-		return std::vector<Command>();
+		for (auto i = 0; i < stringCommand.size(); i++)
+		{
+			if (stringCommand[i] == '~')
+			{
+				auto command = MapTokenToCommand(stringCommand[i + 1]);
+				if (stringCommand[i] == '(')
+				{
+					//find first coincidence of ')' character and get number in between
+				}
+			}
+		}
+	}
+
+	KeyboardCommand DataParser::MapTokenToCommand(const char command)
+	{
+		switch (command)
+		{
+			case '^': return KeyboardCommand::Up;       break;
+			case 'v': return KeyboardCommand::Down;     break;
+			case '<': return KeyboardCommand::Left;     break;
+			case '>': return KeyboardCommand::Right;    break;
+			case 'h': return KeyboardCommand::Home;     break;
+			case 'n': return KeyboardCommand::End;      break;
+			case 'e': return KeyboardCommand::Delete;   break;
+			case 'u': return KeyboardCommand::PageUp;   break;
+			case 'd': return KeyboardCommand::PageDown; break;
+		}
 	}
 
 	int DataParser::DeserializeOrderValue(const std::string& line)
@@ -78,6 +109,7 @@ namespace Tap
 			return std::stoi(orderValue);
 		}
 	}
+
 
 	void DataParser::SanitizeLine()
 	{

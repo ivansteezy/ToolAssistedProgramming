@@ -25,6 +25,7 @@ namespace Tap
 		std::vector<Command> DeserializeCommands(const std::string& stringCommand);
 		void SanitizeLine();
 		int DeserializeOrderValue(const std::string& line);
+		KeyboardCommand MapTokenToCommand(const char command);
 
 	public:
 		FileDataLines m_fileLines;

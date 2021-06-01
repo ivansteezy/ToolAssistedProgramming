@@ -9,18 +9,18 @@
 using FileDataMap = std::map<std::string, std::vector<std::string>>;
 using FileDataLines = std::vector<std::string>;
 
-enum KeyboardCommand : std::uint8_t
+enum class KeyboardCommand : std::uint8_t
 {
 	Up		 = 0x00,    // ~^
 	Down	 = 0x01,    // ~v
 	Left	 = 0x02,    // ~<
 	Right	 = 0x03,    // ~>
-	Home	 = 0x04,    // ~hm
-	End		 = 0x05,    // ~nd
-	Delete	 = 0x06,    // ~dl
-	PageUp	 = 0x07,    // ~pu
-	PageDown = 0x08,    // ~pd
-	None	 = 0xFF	    // ~nn
+	Home	 = 0x04,    // ~h
+	End		 = 0x05,    // ~n
+	Delete	 = 0x06,    // ~e
+	PageUp	 = 0x07,    // ~u
+	PageDown = 0x08,    // ~d
+	None	 = 0xFF	    // ~x
 };
 
 struct Command
