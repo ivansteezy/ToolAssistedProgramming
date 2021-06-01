@@ -61,7 +61,7 @@ namespace Tap
 
 		if (stringCommand.find("~") == std::string::npos)
 		{
-			cmds.push_back({ KeyboardCommand::None, 0 });
+			// cmds.push_back({ KeyboardCommand::None, 0 });
 			return cmds;
 		}
 

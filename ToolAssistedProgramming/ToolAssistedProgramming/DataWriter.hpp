@@ -1,6 +1,7 @@
 #ifndef DATAWRITER_HPP
 #define DATAWRITER_HPP
 
+#include <Windows.h>
 #include "Foundation.hpp"
 
 namespace Tap
@@ -8,6 +9,7 @@ namespace Tap
 	class DataWriter
 	{
 	public:
+		DataWriter();
 		DataWriter(CommandPayload payload);
 
 	public:
@@ -16,13 +18,15 @@ namespace Tap
 		void SetTimeToWait(std::chrono::seconds waitFor);
 
 	private:
-		void WriteText();
-		void WriteCommand();
+		void WriteText(const std::string& line);
+		void WriteCommands(const std::vector<Command>& commads);
+		void WriteLineJump();
 
 	private:
 		CommandPayload m_commandPayload;
 		std::chrono::milliseconds m_speed;
 		std::chrono::seconds m_waitFor;
+		INPUT m_input;
 	};
 }
 

@@ -1,6 +1,7 @@
 ﻿#include "EntryPoint.hpp"
 #include "FileManager.hpp"
 #include "DataParser.hpp"
+#include "DataWriter.hpp"
 
 int main()
 {
@@ -43,6 +44,12 @@ int main()
 
     Tap::DataParser dp(res);
     auto y = dp.GetCommandPayload();
+
+    std::cout << "Press any key to begin: " << std::endl;
+    std::cin.get();
+
+    Tap::DataWriter dw(y);
+    dw.BeginChoreography();
 
     return 0;
 }
