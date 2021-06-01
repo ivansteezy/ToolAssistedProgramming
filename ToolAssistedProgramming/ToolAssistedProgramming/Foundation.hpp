@@ -26,7 +26,7 @@ enum class KeyboardCommand : std::uint8_t
 struct Command
 {
 	KeyboardCommand command;
-	std::size_t numberOfTimes;
+	int numberOfTimes;
 };
 
 struct LineMetadata

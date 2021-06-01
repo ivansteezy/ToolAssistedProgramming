@@ -32,6 +32,8 @@ namespace Tap
 
 	LineMetadata DataParser::BuildLineMetadata(std::string& line)
 	{
+		//al deserealizar deberia de pasar solamente
+		//el order value, el comando y los argumentos, no el codigo
 		LineMetadata lm;
 		lm.orderValue = DeserializeOrderValue(line);
 		lm.navigationCommads = DeserializeCommands(line);
@@ -61,6 +63,8 @@ namespace Tap
 		// 3.-stack the command
 		// 4.-identify if proceed another "~" token, repeat step 1
 		std::vector<Command> cmds;
+		KeyboardCommand keyboardCommand = KeyboardCommand::None;
+
 		if (stringCommand.find("~") == std::string::npos)
 		{
 			cmds.push_back({ KeyboardCommand::None, 0 }); // list initializers lmao
@@ -71,13 +75,24 @@ namespace Tap
 		{
 			if (stringCommand[i] == '~')
 			{
-				auto command = MapTokenToCommand(stringCommand[i + 1]);
-				if (stringCommand[i] == '(')
+				keyboardCommand = MapTokenToCommand(stringCommand[i + 1]); // everything fine until here
+				
+				if (stringCommand[i + 2] != '(')
 				{
-					//find first coincidence of ')' character and get number in between
+					cmds.push_back({ keyboardCommand, 1 });
 				}
 			}
+			if (stringCommand[i] == '(')
+			{
+				//find first coincidence of ')' character and get number in between
+				auto delimiter = stringCommand.find_first_of(')');
+				auto repetitionString = std::string(stringCommand.c_str() + (i + 1), (delimiter - 1) - i);
+				auto repetitions = std::stoi(repetitionString);
+					
+				cmds.push_back({ keyboardCommand, repetitions });
+			}
 		}
+		return cmds;
 	}
 
 	KeyboardCommand DataParser::MapTokenToCommand(const char command)
