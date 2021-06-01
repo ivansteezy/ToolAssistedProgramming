@@ -76,15 +76,19 @@ namespace Tap
 
 	void DataWriter::WriteCommands(const std::vector<Command>& commands)
 	{
+		INPUT in = { 0 };
 		for (const auto& cmd : commands)
 		{
 			for (auto i = 0; i < cmd.numberOfTimes; i++)
 			{
-				m_input.type = INPUT_KEYBOARD;
-				m_input.ki.wScan = MapVirtualKey(MapCommandToVirtualKey(cmd.command), MAPVK_VK_TO_VSC);
-				SendInput(1, &m_input, sizeof(INPUT));
-				m_input.ki.dwFlags = KEYEVENTF_SCANCODE;
-				SendInput(1, &m_input, sizeof(INPUT));
+				in.type = INPUT_KEYBOARD;
+				in.ki.wScan = 0;
+				in.ki.wVk = MapCommandToVirtualKey(cmd.command);
+				SendInput(1, &in, sizeof(INPUT));
+				in.ki.dwFlags = KEYEVENTF_KEYUP;
+				SendInput(1, &in, sizeof(INPUT));
+				
+				in.ki.dwFlags = 0;
 			}
 		}
 	}
@@ -100,8 +104,8 @@ namespace Tap
 			case KeyboardCommand::Home:	    return VK_HOME;   break;
 			case KeyboardCommand::End:	    return VK_END;    break;
 			case KeyboardCommand::Delete:   return VK_DELETE; break;
-			case KeyboardCommand::PageUp:       /*TO DO*/	  break;
-			case KeyboardCommand::PageDown:     /*TO DO*/     break;
+			case KeyboardCommand::PageUp:   return VK_PRIOR;  break;
+			case KeyboardCommand::PageDown: return VK_NEXT;   break;
 		}
 	}
 }
