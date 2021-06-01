@@ -23,7 +23,7 @@ namespace Tap
 		LineMetadata BuildLineMetadata(std::string& line);
 		void RemoveTab();
 		std::vector<Command> DeserializeCommands(const std::string& stringCommand);
-		void SanitizeLine();
+		SplitedLine SanitizeLine(const std::string& line);
 		int DeserializeOrderValue(const std::string& line);
 		KeyboardCommand MapTokenToCommand(const char command);
 

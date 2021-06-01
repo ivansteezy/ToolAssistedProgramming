@@ -33,11 +33,11 @@ namespace Tap
 	LineMetadata DataParser::BuildLineMetadata(std::string& line)
 	{
 		LineMetadata lm;
-		auto headers = line.substr(0, line.find("\t"));
+		auto splitedLine = SanitizeLine(line);
 
-		lm.orderValue = DeserializeOrderValue(headers);
-		lm.navigationCommads = DeserializeCommands(headers);
-		lm.text = line;
+		lm.orderValue = DeserializeOrderValue(splitedLine.arguments);
+		lm.navigationCommads = DeserializeCommands(splitedLine.arguments);
+		lm.text = splitedLine.text;
 		return lm;
 	}
 
@@ -132,8 +132,16 @@ namespace Tap
 	}
 
 
-	void DataParser::SanitizeLine()
+	SplitedLine DataParser::SanitizeLine(const std::string& line)
 	{
+		SplitedLine sl;
+		auto sanitizeArguments = std::string(line.c_str() + 0, 20 - 0);
+		sanitizeArguments.erase(std::remove_if(sanitizeArguments.begin(), 
+								sanitizeArguments.end(), isspace), sanitizeArguments.end());
+		sl.arguments = sanitizeArguments;
 
+		auto sanitizeText = std::string(line.c_str() + 20, line.size());
+		sl.text = sanitizeText;
+		return sl;
 	}
 }

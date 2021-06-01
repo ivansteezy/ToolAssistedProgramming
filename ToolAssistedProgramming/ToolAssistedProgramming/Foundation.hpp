@@ -36,4 +36,10 @@ struct LineMetadata
 	std::vector<Command> navigationCommads; // should be a stack insted?
 };
 
+struct SplitedLine
+{
+	std::string arguments;
+	std::string text;
+};
+
 #endif // !FOUNDATION_H
