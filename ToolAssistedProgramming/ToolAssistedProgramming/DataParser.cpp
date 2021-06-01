@@ -32,11 +32,11 @@ namespace Tap
 
 	LineMetadata DataParser::BuildLineMetadata(std::string& line)
 	{
-		//al deserealizar deberia de pasar solamente
-		//el order value, el comando y los argumentos, no el codigo
 		LineMetadata lm;
-		lm.orderValue = DeserializeOrderValue(line);
-		lm.navigationCommads = DeserializeCommands(line);
+		auto headers = line.substr(0, line.find("\t"));
+
+		lm.orderValue = DeserializeOrderValue(headers);
+		lm.navigationCommads = DeserializeCommands(headers);
 		lm.text = line;
 		return lm;
 	}
@@ -109,6 +109,12 @@ namespace Tap
 			case 'u': return KeyboardCommand::PageUp;   break;
 			case 'd': return KeyboardCommand::PageDown; break;
 		}
+	}
+
+	[[nodiscard]]
+	std::vector<LineMetadata> DataParser::GetCommandPayload() const
+	{
+		return m_commandPayload;
 	}
 
 	int DataParser::DeserializeOrderValue(const std::string& line)

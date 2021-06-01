@@ -40,9 +40,9 @@ int main()
     Tap::FileManager x(Tap::FileInputType::File, "C:\\Users\\Syro\\Desktop\\ExampleListingFile.cpp");
     auto res = x.GetFileLines();
 
-    auto resSize = res.size();
 
     Tap::DataParser dp(res);
+    auto y = dp.GetCommandPayload();
 
     return 0;
 }

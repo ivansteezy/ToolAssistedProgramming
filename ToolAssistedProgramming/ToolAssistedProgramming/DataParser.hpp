@@ -28,6 +28,9 @@ namespace Tap
 		KeyboardCommand MapTokenToCommand(const char command);
 
 	public:
+		std::vector<LineMetadata> GetCommandPayload() const;
+
+	public:
 		FileDataLines m_fileLines;
 		std::map<int, std::string> m_mapToOrder;
 		std::vector<LineMetadata> m_commandPayload;
