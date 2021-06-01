@@ -41,7 +41,7 @@ namespace Tap
 		return lm;
 	}
 
-	void DataParser::RemoveTab()
+	void DataParser::RemoveTab() // ???
 	{
 		constexpr std::string_view sequenceToRemove = "\t\t\t\t";
 		for (auto& line : m_fileLines)
@@ -56,18 +56,12 @@ namespace Tap
 
 	std::vector<Command> DataParser::DeserializeCommands(const std::string& stringCommand)
 	{
-		// sample line (4th line in the example listing file):
-		// 10~^(3)~hm press up-key 3 times then press home page
-		// 1.-find the "~" character, identtify the proceded token
-		// 2.-identify the number of times to execute that command
-		// 3.-stack the command
-		// 4.-identify if proceed another "~" token, repeat step 1
 		std::vector<Command> cmds;
 		KeyboardCommand keyboardCommand = KeyboardCommand::None;
 
 		if (stringCommand.find("~") == std::string::npos)
 		{
-			cmds.push_back({ KeyboardCommand::None, 0 }); // list initializers lmao
+			cmds.push_back({ KeyboardCommand::None, 0 });
 			return cmds;
 		}
 
@@ -75,7 +69,7 @@ namespace Tap
 		{
 			if (stringCommand[i] == '~')
 			{
-				keyboardCommand = MapTokenToCommand(stringCommand[i + 1]); // everything fine until here
+				keyboardCommand = MapTokenToCommand(stringCommand[i + 1]);
 				
 				if (stringCommand[i + 2] != '(')
 				{
@@ -84,7 +78,6 @@ namespace Tap
 			}
 			if (stringCommand[i] == '(')
 			{
-				//find first coincidence of ')' character and get number in between
 				auto delimiter = stringCommand.find_first_of(')');
 				auto repetitionString = std::string(stringCommand.c_str() + (i + 1), (delimiter - 1) - i);
 				auto repetitions = std::stoi(repetitionString);
@@ -112,21 +105,21 @@ namespace Tap
 	}
 
 	[[nodiscard]]
-	std::vector<LineMetadata> DataParser::GetCommandPayload() const
+	CommandPayload DataParser::GetCommandPayload() const
 	{
 		return m_commandPayload;
 	}
 
-	int DataParser::DeserializeOrderValue(const std::string& line)
+	int DataParser::DeserializeOrderValue(const std::string& value)
 	{
-		if (line.find("~") != std::string::npos)
+		if (value.find("~") != std::string::npos)
 		{
-			auto orderValue = line.substr(0, line.find("~"));
+			auto orderValue = value.substr(0, value.find("~"));
 			return std::stoi(orderValue);
 		}
 		else 
 		{
-			auto orderValue = line.substr(0, line.find("\t"));
+			auto orderValue = value.substr(0, value.find("\t"));
 			return std::stoi(orderValue);
 		}
 	}

@@ -18,22 +18,23 @@ namespace Tap
 		DataParser(FileDataLines filelines);
 
 	public:
-		void SortLines();
-		void BuildCommandPayLoad();
-		LineMetadata BuildLineMetadata(std::string& line);
-		void RemoveTab();
+		CommandPayload GetCommandPayload() const;
+
+	private:
 		std::vector<Command> DeserializeCommands(const std::string& stringCommand);
-		SplitedLine SanitizeLine(const std::string& line);
-		int DeserializeOrderValue(const std::string& line);
 		KeyboardCommand MapTokenToCommand(const char command);
+		int DeserializeOrderValue(const std::string& value);
+		LineMetadata BuildLineMetadata(std::string& line);
+		SplitedLine SanitizeLine(const std::string& line);
+		void BuildCommandPayLoad();
+		void SortLines();
+		void RemoveTab();
 
-	public:
-		std::vector<LineMetadata> GetCommandPayload() const;
 
-	public:
+	private:
 		FileDataLines m_fileLines;
 		std::map<int, std::string> m_mapToOrder;
-		std::vector<LineMetadata> m_commandPayload;
+		CommandPayload m_commandPayload;
 	};
 }
 

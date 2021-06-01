@@ -4,10 +4,10 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <chrono>
+#include <thread>
 #include <iostream>
 
-using FileDataMap = std::map<std::string, std::vector<std::string>>;
-using FileDataLines = std::vector<std::string>;
 
 enum class KeyboardCommand : std::uint8_t
 {
@@ -41,5 +41,9 @@ struct SplitedLine
 	std::string arguments;
 	std::string text;
 };
+
+using FileDataMap    = std::map<std::string, std::vector<std::string>>;
+using FileDataLines  = std::vector<std::string>;
+using CommandPayload = std::vector<LineMetadata>;
 
 #endif // !FOUNDATION_H
