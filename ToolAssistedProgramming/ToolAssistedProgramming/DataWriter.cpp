@@ -28,10 +28,10 @@ namespace Tap
 		{
 			std::string newline = line.text.substr(0, line.text.find_first_of('\0'));
 			WriteText(newline);
-			/*if (!line.navigationCommads.empty())
+			if (!line.navigationCommads.empty())
 			{
 				WriteCommands(line.navigationCommads);
-			}*/
+			}
 		}
 	}
 
@@ -74,8 +74,34 @@ namespace Tap
 		std::this_thread::sleep_for(std::chrono::milliseconds(m_speed));
 	}
 
-	void DataWriter::WriteCommands(const std::vector<Command>& commads)
+	void DataWriter::WriteCommands(const std::vector<Command>& commands)
 	{
+		for (const auto& cmd : commands)
+		{
+			for (auto i = 0; i < cmd.numberOfTimes; i++)
+			{
+				m_input.type = INPUT_KEYBOARD;
+				m_input.ki.wScan = MapVirtualKey(MapCommandToVirtualKey(cmd.command), MAPVK_VK_TO_VSC);
+				SendInput(1, &m_input, sizeof(INPUT));
+				m_input.ki.dwFlags = KEYEVENTF_SCANCODE;
+				SendInput(1, &m_input, sizeof(INPUT));
+			}
+		}
+	}
 
+	int DataWriter::MapCommandToVirtualKey(const KeyboardCommand& keyboardCommand)
+	{
+		switch (keyboardCommand)
+		{
+			case KeyboardCommand::Up:       return VK_UP;     break;
+			case KeyboardCommand::Down:     return VK_DOWN;   break;
+			case KeyboardCommand::Left:     return VK_LEFT;   break;
+			case KeyboardCommand::Right:    return VK_RIGHT;  break;
+			case KeyboardCommand::Home:	    return VK_HOME;   break;
+			case KeyboardCommand::End:	    return VK_END;    break;
+			case KeyboardCommand::Delete:   return VK_DELETE; break;
+			case KeyboardCommand::PageUp:       /*TO DO*/	  break;
+			case KeyboardCommand::PageDown:     /*TO DO*/     break;
+		}
 	}
 }

@@ -21,6 +21,7 @@ namespace Tap
 		void WriteText(const std::string& line);
 		void WriteCommands(const std::vector<Command>& commads);
 		void WriteLineJump();
+		int MapCommandToVirtualKey(const KeyboardCommand& keyboardCommand);
 
 	private:
 		CommandPayload m_commandPayload;
