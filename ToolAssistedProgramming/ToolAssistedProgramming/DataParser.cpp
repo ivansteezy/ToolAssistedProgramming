@@ -61,15 +61,22 @@ namespace Tap
 		// 3.-stack the command
 		// 4.-identify if proceed another "~" token, repeat step 1
 		std::cout << stringCommand << std::endl;
+
 		return std::vector<Command>();
 	}
 
 	int DataParser::DeserializeOrderValue(const std::string& line)
 	{
-		// 1.-find the "~" character
-		// 2.-All the numbers before that caracter parse into a int, 
-		// then return
-		return 0;
+		if (line.find("~") != std::string::npos)
+		{
+			auto orderValue = line.substr(0, line.find("~"));
+			return std::stoi(orderValue);
+		}
+		else 
+		{
+			auto orderValue = line.substr(0, line.find("\t"));
+			return std::stoi(orderValue);
+		}
 	}
 
 	void DataParser::SanitizeLine()
